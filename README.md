@@ -35,7 +35,7 @@
 ```bash
 # Клонировать репозиторий
 git clone https://github.com/oh-leg/catfact.git
-cd my-app
+cd catfact
 
 # Установить зависимости
 npm install
