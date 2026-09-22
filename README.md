@@ -1,75 +1,45 @@
-# React + TypeScript + Vite
+# Cat Fact App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Учебный проект на React + TypeScript + Vite.  
+Приложение делает запрос к API [meowfacts](https://meowfacts.herokuapp.com/?lang=rus-ru) и отображает случайный факт о котах.
 
-Currently, two official plugins are available:
+## Демо
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+[https://oh-leg.github.io/catfact](https://oh-leg.github.io/catfact)
 
-## React Compiler
+## Функциональность
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- Кнопка «Получить факт» — при нажатии выполняется запрос к API
+- Отображение факта в отдельном компоненте (зелёная плашка)
+- Обработка ошибок: если API вернул код, отличный от 2xx, или сеть недоступна — отображается красная плашка с текстом ошибки
+- Блокировка кнопки на время загрузки
+- Индикация загрузки («Загрузка...» на кнопке)
 
-## Expanding the ESLint configuration
+## Технологии
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- React 18
+- TypeScript
+- Vite
+- Fetch API
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## Как работает
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+1. Пользователь нажимает кнопку «Получить факт»
+2. Вызывается функция `fetchFact`, которая делает `fetch` к API
+3. Если `response.ok === false` (код не 2xx) — выбрасывается ошибка
+4. При успехе факт сохраняется в состояние `fact` и отображается в `Fact`
+5. При ошибке текст сохраняется в состояние `error` и отображается в `ErrorComponent`
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## Запуск локально
 
-```
+```bash
+# Клонировать репозиторий
+git clone https://github.com/oh-leg/catfact.git
+cd my-app
 
-You can also install [eslint-plugin-react-x](https://npmx.dev/package/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://npmx.dev/package/eslint-plugin-react-dom) for React-specific lint rules:
+# Установить зависимости
+npm install
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-
+# Запустить dev-сервер
+npm run dev
 ```
